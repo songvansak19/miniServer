@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class createAcc {
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -20,13 +22,19 @@ public class createAcc {
             System.out.println("Account Number: " + account_num);
             System.out.println("Balance: " + balance);
             System.out.println("Password: " + password);
-            System.out.println("History: " + history);
+            System.out.println("History | " + history.size() + " log(s)");
+            System.out.println("=".repeat(30));
+            for (String log : history) {
+                System.out.println("- " + log);
+            }
+            System.out.println("=".repeat(30));
         }
     }
 
     public static void main(String[] args) throws Exception {
-        Account user;
+        Account user = new Account();
         Scanner input = new Scanner(System.in);
+        String IP = "127.0.0.1";
 
         System.out.print("Enter your Account Number: ");
         int account_num = input.nextInt();
@@ -35,17 +43,28 @@ public class createAcc {
         String password = input.nextLine();
         input.close();
 
+        JsonObject json = new JsonObject();
+        json.addProperty("account_num", account_num);
+        json.addProperty("password", password);
+
         Process process = new ProcessBuilder(
             "curl.exe",
-            "-X", "PUT",
-            "http://localhost:8000/accounts/" + account_num + "/" + password
+            "-X", "POST",
+            "http://" + IP + ":8000/accounts/login",
+            "-d", json.toString()
         ).start();
 
         String response = new String(
             process.getInputStream().readAllBytes()
         );
 
-        user = gson.fromJson(response, Account.class);
-        user.display();
+        try {
+            user = gson.fromJson(response, Account.class);
+            user.display();
+        } catch (Exception e) {
+            System.out.println("=".repeat(30));
+            System.out.println("Account not found!!");
+            System.out.println("=".repeat(30));
+        }
     }
 }
