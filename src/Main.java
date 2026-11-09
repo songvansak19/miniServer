@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
-public class createAcc {
+public class Main {
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static class Account {
