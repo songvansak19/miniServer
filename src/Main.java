@@ -25,7 +25,8 @@ public class Main {
                     double balance = input.nextDouble();
                     
                     user = new Account(name, account_num, password, balance);
-                    ApiClient.register(user);
+                    ClientRequest.register(user);
+                    System.out.println("Account Created! Please Login!");
                     break;
                 }
                 case 2 -> {
@@ -34,12 +35,56 @@ public class Main {
                     input.nextLine();
                     System.out.print("Enter your Password: ");
                     String password = input.nextLine();
-                    user = ApiClient.login(account_num, password);
+                    user = ClientRequest.login(account_num, password);
                     
                     if (user == null) {
                         System.out.println("Account not found!");
                     } else {
+                        boolean running = true;
                         System.out.println("Welcome back, " + user.getName() + "\n");
+                        while (running) {
+                            System.out.println("1 - Check Balance");
+                            System.out.println("2 - Deposit");
+                            System.out.println("3 - Withdraw");
+                            System.out.println("4 - History");
+                            System.out.println("5 - Log out");
+                            System.out.print("Your Option: ");
+                            option = input.nextInt();
+                            switch (option) {
+                                case 1 -> {
+                                    user = ClientRequest.update(user.getAccountNum());
+                                    System.out.println("Your current balance: " + user.getBalance());
+                                    break;
+                                }
+                                case 2 -> {
+                                    System.out.print("Enter amount: ");
+                                    double amount = input.nextDouble();
+                                    if (ClientRequest.deposit(amount, user.getAccountNum()) != null) {
+                                        user = ClientRequest.update(user.getAccountNum());
+                                        System.out.println("Deposit Successful!");
+                                        break;
+                                    }
+                                    System.out.println("Deposit Failed!");
+                                }
+                                case 3 -> {
+                                    System.out.print("Enter amount: ");
+                                    double amount = input.nextDouble();
+                                    if (ClientRequest.withdraw(amount, user.getAccountNum()) != null) {
+                                        user = ClientRequest.update(user.getAccountNum());
+                                        System.out.println("Withdrwal Successful!");
+                                        break;
+                                    }
+                                    System.out.println("Withdrwal Failed!");
+                                }
+                                case 4 -> {
+                                    user = ClientRequest.update(user.getAccountNum());
+                                    System.out.println("History: | " + user.getHistory().size() + " log(s)");
+                                    for (String log : user.getHistory()) System.out.println("- " + log);
+                                }
+                                case 5 -> running = false;
+                                default -> System.out.println("Invalid Option!");
+                            }
+                        }
                     }
                     break;
                 }
