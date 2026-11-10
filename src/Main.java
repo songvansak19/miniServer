@@ -52,7 +52,9 @@ public class Main {
                             option = input.nextInt();
                             switch (option) {
                                 case 1 -> {
-                                    user = ClientRequest.update(user.getAccountNum());
+                                    if ((user = ClientRequest.update(user.getAccountNum())) == null) {
+                                        System.out.println("Server is not running!\nClosing program..."); return;
+                                    };
                                     System.out.println("Your current balance: " + user.getBalance());
                                     break;
                                 }
@@ -60,7 +62,9 @@ public class Main {
                                     System.out.print("Enter amount: ");
                                     double amount = input.nextDouble();
                                     if (ClientRequest.deposit(amount, user.getAccountNum()) != null) {
-                                        user = ClientRequest.update(user.getAccountNum());
+                                        if ((user = ClientRequest.update(user.getAccountNum())) == null) {
+                                            System.out.println("Server is not running!\nClosing program..."); return;
+                                        };
                                         System.out.println("Deposit Successful!");
                                         break;
                                     }
@@ -70,14 +74,18 @@ public class Main {
                                     System.out.print("Enter amount: ");
                                     double amount = input.nextDouble();
                                     if (ClientRequest.withdraw(amount, user.getAccountNum()) != null) {
-                                        user = ClientRequest.update(user.getAccountNum());
+                                        if ((user = ClientRequest.update(user.getAccountNum())) == null) {
+                                            System.out.println("Server is not running!\nClosing program..."); return;
+                                        };
                                         System.out.println("Withdrwal Successful!");
                                         break;
                                     }
                                     System.out.println("Withdrwal Failed!");
                                 }
                                 case 4 -> {
-                                    user = ClientRequest.update(user.getAccountNum());
+                                    if ((user = ClientRequest.update(user.getAccountNum())) == null) {
+                                        System.out.println("Server is not running!\nClosing program..."); return;
+                                    };
                                     System.out.println("History: | " + user.getHistory().size() + " log(s)");
                                     for (String log : user.getHistory()) System.out.println("- " + log);
                                 }
