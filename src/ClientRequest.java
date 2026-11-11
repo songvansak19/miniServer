@@ -29,10 +29,7 @@ public class ClientRequest {
         object.addProperty("password", password);
         object.addProperty("account_num", account_num);
         String json = processBuilder(object.toString(), "login");
-        if (json != null) {
-            return gson.fromJson(json, Account.class);
-        }
-        return null;
+        return gson.fromJson(json, Account.class);
     }
 
     public static Account deposit(double amount, long account_num) throws IOException {
@@ -49,6 +46,27 @@ public class ClientRequest {
         object.addProperty("account_num", account_num);
         String json = processBuilder(object.toString(), "withdraw");
         return gson.fromJson(json, Account.class);
+    }
+
+    public static Account transfer(double amount, long account_num, Account account) throws IOException {
+        JsonObject object = new JsonObject();
+        object.addProperty("amount", amount);
+        object.addProperty("receiver", account_num);
+        object.addProperty("transferer", String.valueOf(account.getAccountNum()));
+        String json = gson.toJson(object);
+
+        Process process = new ProcessBuilder(
+            "curl.exe",
+            "-X", "POST",
+            "http://" + IP + ":8000/transfer/",
+            "-d", json
+        ).start();
+
+        String response = new String(
+            process.getInputStream().readAllBytes()
+        );
+
+        return gson.fromJson(response, Account.class);
     }
 
     public static Account update(long account_num) throws IOException {
