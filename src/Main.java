@@ -68,7 +68,7 @@ public class Main {
 
         app.post("/accounts/register", context -> {
             Account account = gson.fromJson(context.body(), Account.class);
-            account.addHistory("Acccount Created!");
+            account.addHistory("Account Created!");
             account.addHistory("Initial Balance: " + account.getBalance());
             accounts.add(gson.toJsonTree(account));
             Files.writeString(path, gson.toJson(accounts));
@@ -91,7 +91,7 @@ public class Main {
                         return;
                     }
 
-                    account.addHistory("Diposit: " + amount);
+                    account.addHistory("Deposit: " + amount);
                     display(context);
                     System.out.println("Account: " + account.getName() + ", Deposit: " + amount + "\n");
                     accounts.set(i, gson.toJsonTree(account));
