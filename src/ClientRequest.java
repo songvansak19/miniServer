@@ -8,11 +8,11 @@ public class ClientRequest {
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static String IP = "127.0.0.1";
 
-    private static String processBuilder(String json, String rquest) throws IOException {
+    private static String processBuilder(String json, String request) throws IOException {
         Process process = new ProcessBuilder(
             "curl.exe",
             "-X", "POST",
-            "http://" + IP + ":8000/accounts/" + rquest,
+            "http://" + IP + ":8000/accounts/" + request,
             "-d", json
         ).start();
         return new String(
