@@ -81,10 +81,10 @@ public class Main {
                                             System.out.println("Server is not running!\nClosing program...");
                                             return;
                                         }
-                                        System.out.println("Withdrwal Successful!");
+                                        System.out.println("Withdrawal Successful!");
                                         break;
                                     }
-                                    System.out.println("Withdrwal Failed!");
+                                    System.out.println("Withdrawal Failed!");
                                 }
                                 case 4 -> {
                                     System.out.print("Enter Receive Account Number: ");
@@ -97,7 +97,7 @@ public class Main {
                                             System.out.println("Server is not running!\nClosing program...");
                                             return;
                                         }
-                                        System.out.println("Transfer Successfull!");
+                                        System.out.println("Transfer Successful!");
                                         break;
                                     }
                                     System.out.println("Transfer Failed!");

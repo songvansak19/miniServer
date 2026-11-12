@@ -1,48 +1,67 @@
-// 2. Typed DOM elements and nullable Account holder
-const loginBtn = document.getElementById("login");
-let currentAccount = null;
-// 3. Strongly typed Account class
-class Account {
-    username;
-    password;
-    account_num;
-    balance;
-    history;
-    constructor(username, password, account_num, balance, history) {
-        this.username = username;
-        this.password = password;
-        this.account_num = account_num;
-        this.balance = balance;
-        this.history = history;
+
+const submit = document.getElementById("submit");
+let username = document.getElementById("username").value;
+
+submit.onclick = function () {
+    username = document.getElementById("username").value;
+    const String = document.getElementById("header");
+    if (username !== "")
+        String.textContent = `Hi, ${username}`;
+    else String.textContent = "Banking System👋";
+};
+
+function sum(...numbers) {
+    let sum = 0;
+    for (let number of numbers) {
+        sum += number;
     }
+    console.log(sum);
 }
-// 4. Safely attach the event listener (only if loginBtn exists in the HTML)
-loginBtn?.addEventListener("click", async function (event) {
-    event.preventDefault(); // Prevents page reload if button is inside a <form>
-    const accountInput = document.getElementById("account_num");
-    const passwordInput = document.getElementById("password");
-    const account_num = accountInput.value;
-    const password = passwordInput.value;
-    try {
-        const response = await fetch("http://127.0.0.1:8000/accounts/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ account_num, password })
-        });
-        if (!response.ok) {
-            throw new Error(`Login failed: ${response.status}`);
-        }
-        // Certify the JSON response with your LoginResponse interface
-        const data = await response.json();
-        // Populate your Account class with the server's response
-        currentAccount = new Account(data.name, data.password, data.account_num, data.balance, data.history);
-        console.log("Logged in account:", currentAccount);
-    }
-    catch (error) {
-        if (error instanceof Error) {
-            console.error("Error:", error.message);
-        }
-    }
+
+sum(1, 2, 4, 5, 6);
+
+function combine(...elements) {
+    return elements;
+}
+
+console.log(combine(1, 2, 3, 4, 5, 6));
+
+function sentence(...words) {
+    return words.join(" ");
+}
+
+console.log(sentence("Hello,", "World!"));
+
+function func1(func1) {
+    console.log("HEllO");
+    func1();
+}
+
+function func2() {
+    console.log("GOODBYE");
+}
+
+func1(func2);
+
+const arr = [1, 2, 3, 4, 5];
+
+const arr1 = arr.map(function (element, index) {
+    if (index === 1) return element = 10;
+    else return element;
 });
+
+console.log(arr1);
+
+const newArr = arr.filter(element => element % 2 === 0);
+
+console.log(newArr);
+
+arr.forEach(function (element, index, array) {
+    array[index] === 3 ? array[index] = 10 : array[index] = element;
+});
+
+console.log(arr)
+
+arr.forEach(function (element, index, array) {
+    console.log("Element: " + element, "Index: " + index, "Array: " + array);
+})
