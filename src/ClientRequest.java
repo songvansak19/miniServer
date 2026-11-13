@@ -10,14 +10,12 @@ public class ClientRequest {
 
     private static String processBuilder(String json, String request) throws IOException {
         Process process = new ProcessBuilder(
-            "curl.exe",
-            "-X", "POST",
-            "http://" + IP + ":8000/accounts/" + request,
-            "-d", json
-        ).start();
+                "curl.exe",
+                "-X", "POST",
+                "http://" + IP + ":8000/accounts/" + request,
+                "-d", json).start();
         return new String(
-            process.getInputStream().readAllBytes()
-        );
+                process.getInputStream().readAllBytes());
     }
 
     public static void register(Account account) throws IOException {
@@ -55,30 +53,18 @@ public class ClientRequest {
         object.addProperty("transferer", String.valueOf(account.getAccountNum()));
         String json = gson.toJson(object);
 
-        Process process = new ProcessBuilder(
-            "curl.exe",
-            "-X", "POST",
-            "http://" + IP + ":8000/transfer/",
-            "-d", json
-        ).start();
-
-        String response = new String(
-            process.getInputStream().readAllBytes()
-        );
-
+        String response = processBuilder(json, "transfer");
         return gson.fromJson(response, Account.class);
     }
 
     public static Account update(long account_num) throws IOException {
         Process process = new ProcessBuilder(
-            "curl.exe",
-            "-X", "GET",
-            "http://" + IP + ":8000/accounts/get/" + account_num
-        ).start();
+                "curl.exe",
+                "-X", "GET",
+                "http://" + IP + ":8000/accounts/get/" + account_num).start();
 
         String response = new String(
-            process.getInputStream().readAllBytes()
-        );
+                process.getInputStream().readAllBytes());
         return gson.fromJson(response, Account.class);
     }
 }
