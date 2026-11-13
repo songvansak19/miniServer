@@ -68,10 +68,10 @@ const person = {
 	name: "Song Vansak",
 	age: 19,
 	isEmployed: false,
-	sayHello: function (str) {
+	sayHello(str) {
 		console.log(`Hello, I'm ${this.name}. ${str}`);
 	},
-	getSalary: function () {
+	getSalary() {
 		const salary = 1000;
 		console.log(`My salary is ${salary}`);
 	},
@@ -80,17 +80,43 @@ const person = {
 console.log(person);
 
 console.log(person.name);
-console.log(person.sayHello("This is my first object"));
+person.sayHello("This is my first object");
+person.getSalary();
 
 class Car {
-    constructor(name, brand, year, price) {
-        this.name = name;
-        this.brand = brand;
-        this.year = year;
-        this.price = price;
+	static str = "This is just a variable.";
 
-        this.display = function () {
-            console.log("Hi");
-        };
-    }
+	constructor(name, brand, year, price) {
+		this.name = name;
+		this.brand = brand;
+		this.year = year;
+		this.price = price;
+
+		this.display = function () {
+			console.log("Hi");
+		};
+	}
+
+	static func() {
+		console.log("This is just a static function.");
+	}
 }
+
+console.log(Car.str);
+Car.func();
+
+class Toyota extends Car {
+	static print() {
+		console.log("This is Toyota car!!");
+	}
+}
+
+Toyota.print();
+
+const arrayObject = [
+	{ name: "Sak", age: 19 },
+	{ brand: "Lambo", year: 2026 },
+];
+
+console.log(arrayObject[0].name);
+console.log(arrayObject[1].year);
