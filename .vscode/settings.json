@@ -12,6 +12,9 @@
         "gson",
         "Gson",
         "Javalin",
-        "Vansith"
+        "Vansith",
+        "gson",
+        "Gson",
+        "Javalin"
     ]
 }
