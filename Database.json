@@ -1,91 +1,52 @@
 [
-  {
-    "name": "sak",
-    "account_num": 123,
-    "password": "sak123",
-    "balance": 1623.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 1000.0",
-      "Diposit: 100.0",
-      "Withdraw: 600.0",
-      "Diposit: 100.0",
-      "Diposit: 100.0",
-      "Diposit: 100.0",
-      "Withdraw: 100.0",
-      "Diposit: 200.0",
-      "Diposit: 100.0",
-      "Diposit: 123.0"
-    ]
-  },
-  {
-    "name": "Vansith",
-    "account_num": 456,
-    "password": "pass456",
-    "balance": 400.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 200.0",
-      "Receive: 100.0",
-      "Receive: 100.0"
-    ]
-  },
-  {
-    "name": "lll",
-    "account_num": 0,
-    "password": "999",
-    "balance": 900.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 900.0"
-    ]
-  },
-  {
-    "account_num": 0,
-    "balance": 0.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 0.0"
-    ]
-  },
-  {
-    "account_num": 0,
-    "balance": 0.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 0.0"
-    ]
-  },
-  {
-    "account_num": 0,
-    "balance": 0.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 0.0"
-    ]
-  },
-  {
-    "account_num": 0,
-    "balance": 0.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 0.0"
-    ]
-  },
-  {
-    "account_num": 0,
-    "balance": 0.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 0.0"
-    ]
-  },
-  {
-    "account_num": 0,
-    "balance": 0.0,
-    "history": [
-      "Acccount Created!",
-      "Initial Balance: 0.0"
-    ]
-  }
+	{
+		"name": "sak",
+		"account_num": 123,
+		"password": "sak123",
+		"balance": 110800.0,
+		"history": [
+			"Acccount Created!",
+			"Initial Balance: 1000.0",
+			"Diposit: 100.0",
+			"Withdraw: 600.0",
+			"Diposit: 100.0",
+			"Diposit: 100.0",
+			"Diposit: 100.0",
+			"Withdraw: 100.0",
+			"Diposit: 200.0",
+			"Diposit: 100.0",
+			"Receive: 10000.0",
+			"Transfer: 1000.0",
+			"Receive: 300.0",
+			"Receive: 100000.0"
+		]
+	},
+	{
+		"name": "Vansith",
+		"account_num": 456,
+		"password": "pass456",
+		"balance": 1100.0,
+		"history": [
+			"Acccount Created!",
+			"Initial Balance: 200.0",
+			"Receive: 100.0",
+			"Receive: 100.0",
+			"Receive: 1000.0",
+			"Transfer: 300.0"
+		]
+	},
+	{
+		"name": "nea",
+		"account_num": 2458,
+		"password": "24",
+		"balance": 99999.0,
+		"history": [
+			"Acccount Created!",
+			"Initial Balance: 10.0",
+			"Diposit: 200000.0",
+			"Withdraw: 1.0",
+			"Transfer: 10000.0",
+			"Transfer: 100000.0"
+		]
+	}
 ]

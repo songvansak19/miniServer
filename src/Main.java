@@ -35,7 +35,18 @@ public class Main {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonArray accounts = getData(path);
 
-        Javalin app = Javalin.create().start(8000);
+        Javalin app = Javalin.create(config -> {
+            /*
+             * Extra configuration for javascript to be able to run the or connect to the
+             * server
+             */
+            config.bundledPlugins.enableCors(cors -> {
+                cors.addRule(it -> {
+                    it.allowHost("http://127.0.0.1:3000");
+                });
+            });
+        }).start(8000);
+
         System.out.println("Server is Running...\n");
 
         app.get("/accounts/get/{id}", context -> {
@@ -68,7 +79,7 @@ public class Main {
 
         app.post("/accounts/register", context -> {
             Account account = gson.fromJson(context.body(), Account.class);
-            account.addHistory("Acccount Created!");
+            account.addHistory("Account Created!");
             account.addHistory("Initial Balance: " + account.getBalance());
             accounts.add(gson.toJsonTree(account));
             Files.writeString(path, gson.toJson(accounts));
@@ -91,7 +102,7 @@ public class Main {
                         return;
                     }
 
-                    account.addHistory("Diposit: " + amount);
+                    account.addHistory("Deposit: " + amount);
                     display(context);
                     System.out.println("Account: " + account.getName() + ", Deposit: " + amount + "\n");
                     accounts.set(i, gson.toJsonTree(account));
@@ -126,15 +137,22 @@ public class Main {
             }
         });
 
-        app.post("/transfer", context -> {
+        app.post("/accounts/transfer", context -> {
+            display(context);
             JsonObject request = JsonParser.parseString(context.body()).getAsJsonObject();
             Long receiver = request.get("receiver").getAsLong();
             long transferer = request.get("transferer").getAsLong();
             double amount = request.get("amount").getAsDouble();
-            for (JsonElement element : accounts) {
-                JsonObject object = element.getAsJsonObject();
+            for (int i = 0; i < accounts.size(); i++) {
+                JsonObject object = accounts.get(i).getAsJsonObject();
                 if (object.get("account_num").getAsLong() == transferer) {
-                    AccountService.withdraw(amount, gson.fromJson(object, Account.class));
+                    Account account = gson.fromJson(object, Account.class);
+                    if (!AccountService.withdraw(amount, account))
+                        return;
+                    account.addHistory("Transfer: " + amount);
+                    accounts.set(i, gson.toJsonTree(account));
+                    System.out.println("Account: " + account.getName() + ", Transfer: " + amount);
+                    break;
                 }
             }
 
@@ -146,7 +164,6 @@ public class Main {
                         return;
 
                     account.addHistory("Receive: " + amount);
-                    display(context);
                     System.out.println("Account: " + account.getName() + ", Receive: " + amount + "\n");
                     accounts.set(i, gson.toJsonTree(account));
                     Files.writeString(path, gson.toJson(accounts));
@@ -155,7 +172,5 @@ public class Main {
                 }
             }
         });
-
-        app.get("/", context -> context.result(gson.toJson(accounts)));
     }
 }
