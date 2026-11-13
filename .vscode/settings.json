@@ -1,20 +1,16 @@
 {
-    "java.project.sourcePaths": [
-        "src"
-    ],
-    "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar"
-    ],
-    "cSpell.words": [
-        "Acccount",
-        "Diposit",
-        "gson",
-        "Gson",
-        "Javalin",
-        "Vansith",
-        "gson",
-        "Gson",
-        "Javalin"
-    ]
+	"java.project.sourcePaths": ["src"],
+	"java.project.outputPath": "bin",
+	"java.project.referencedLibraries": ["lib/**/*.jar"],
+	"cSpell.words": [
+		"Acccount",
+		"Diposit",
+		"gson",
+		"Gson",
+		"Javalin",
+		"Vansith",
+		"gson",
+		"Gson",
+		"Javalin"
+	]
 }
