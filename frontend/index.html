@@ -3,19 +3,65 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>My First Website</title>
-		<link rel="stylesheet" href="style.css" />
+		<title>Document</title>
 	</head>
-
 	<body>
-		<div class="container">
-			<h1 id="header">Banking System👋</h1>
-			<label>Username:</label>
-			<input id="username" /><br />
-			<label>Password:</label>
-			<input id="password" type="password" /><br /><br />
-			<button id="submit">Login</button>
+		<div id="container1">
+			<h1>Welcome!!</h1>
+			<button id="register">Register</button><br />
+			<button id="login">Log in</button><br /><br />
+		</div>
+
+		<div id="registerContainer" style="display: none">
+			<h1>Register</h1>
+			<input id="username" type="text" placeholder="Username" />
+			<br />
+			<input
+				id="accountNumber"
+				type="number"
+				min="0"
+				placeholder="Account Number"
+			/><br />
+			<input id="password" type="password" placeholder="Password" />
+			<br />
+			<input
+				id="balance"
+				type="number"
+				min="0"
+				placeholder="Initial Balance"
+			/><br />
+			<p id="errorRegisterMsg"></p>
+			<br />
+			<button id="returnRegister">Back</button>
+			<button id="submitRegister" type="submit">Register</button>
+		</div>
+
+		<div id="loginContainer" style="display: none">
+			<h1>Login</h1>
+			<input
+				id="loginAccountNumber"
+				type="number"
+				min="0"
+				placeholder="Account Number"
+			/><br />
+			<input id="loginPassword" type="password" placeholder="Password" /><br />
+			<p id="errorLoginMsg"></p>
+			<br />
+			<button id="returnLogin">Back</button>
+			<button id="submitLogin" type="submit">Login</button>
+		</div>
+
+		<div id="homepage" style="display: none;">
+			<h1 id="welcomeText">Welcome</h1>
+			<button id="profile">Profile</button><br>
+            <button id="balance">Balance</button><br>
+            <button id="deposit">Deposit</button><br>
+            <button id="withdraw">Withdraw</button><br>
+            <button id="transfer">Transfer</button><br>
+            <button id="history">History</button><br>
+            <button id="logout">Logout</button><br>
 		</div>
 		<script src="script.js"></script>
 	</body>
 </html>
+ 

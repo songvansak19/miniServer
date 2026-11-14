@@ -1,122 +1,129 @@
-const submit = document.getElementById("submit");
-let username = document.getElementById("username").value;
+const container1 = document.getElementById("container1");
+const registerContainer = document.getElementById("registerContainer");
+const loginContainer = document.getElementById("loginContainer");
+const homepageContainer = document.getElementById("homepage");
 
-submit.onclick = function () {
-	username = document.getElementById("username").value;
-	const String = document.getElementById("header");
-	if (username !== "") String.textContent = `Hi, ${username}`;
-	else String.textContent = "Banking System👋";
-};
+const loginButton = document.getElementById("login");
+const registerButton = document.getElementById("register");
 
-function sum(...numbers) {
-	let sum = 0;
-	for (let number of numbers) {
-		sum += number;
-	}
-	console.log(sum);
-}
+const returnRegister = document.getElementById("returnRegister");
+const returnLogin = document.getElementById("returnLogin");
 
-sum(1, 2, 4, 5, 6);
-
-function combine(...elements) {
-	return elements;
-}
-
-console.log(combine(1, 2, 3, 4, 5, 6));
-
-function sentence(...words) {
-	return words.join(" ");
-}
-
-console.log(sentence("Hello,", "World!"));
-
-function func1(func1) {
-	console.log("HEllO");
-	func1();
-}
-
-function func2() {
-	console.log("GOODBYE");
-}
-
-func1(func2);
-
-const arr = [1, 2, 3, 4, 5];
-
-const arr1 = arr.map(function (element, index) {
-	if (index === 1) return (element = 10);
-	else return element;
-});
-
-console.log(arr1);
-
-const newArr = arr.filter((element) => element % 2 === 0);
-
-console.log(newArr);
-
-arr.forEach(function (element, index, array) {
-	array[index] === 3 ? (array[index] = 10) : (array[index] = element);
-});
-
-console.log(arr);
-
-arr.forEach(function (element, index, array) {
-	console.log("Element: " + element, "Index: " + index, "Array: " + array);
-});
-
-const person = {
-	name: "Song Vansak",
-	age: 19,
-	isEmployed: false,
-	sayHello(str) {
-		console.log(`Hello, I'm ${this.name}. ${str}`);
-	},
-	getSalary() {
-		const salary = 1000;
-		console.log(`My salary is ${salary}`);
-	},
-};
-
-console.log(person);
-
-console.log(person.name);
-person.sayHello("This is my first object");
-person.getSalary();
-
-class Car {
-	static str = "This is just a variable.";
-
-	constructor(name, brand, year, price) {
+class Account {
+	constructor(name, account_num, password, balance, history = []) {
 		this.name = name;
-		this.brand = brand;
-		this.year = year;
-		this.price = price;
-
-		this.display = function () {
-			console.log("Hi");
-		};
-	}
-
-	static func() {
-		console.log("This is just a static function.");
+		this.account_num = account_num;
+		this.password = password;
+		this.balance = balance;
+		this.history = history;
 	}
 }
 
-console.log(Car.str);
-Car.func();
+let user;
 
-class Toyota extends Car {
-	static print() {
-		console.log("This is Toyota car!!");
-	}
+registerButton.onclick = function () {
+	registerContainer.style.display = "block";
+	container1.style.display = "none";
+};
+
+loginButton.onclick = function () {
+	loginContainer.style.display = "block";
+	container1.style.display = "none";
+};
+
+function returnFunc() {
+	registerContainer.style.display = "none";
+	loginContainer.style.display = "none";
+	container1.style.display = "block";
 }
 
-Toyota.print();
+function homepage() {
+	loginContainer.style.display = "none";
+	homepageContainer.style.display = "block";
+	document.getElementById("welcomeText").textContent =
+		`Welcome back, ${user.name}`;
+}
 
-const arrayObject = [
-	{ name: "Sak", age: 19 },
-	{ brand: "Lambo", year: 2026 },
-];
+returnRegister.onclick = returnFunc;
+returnLogin.onclick = returnFunc;
 
-console.log(arrayObject[0].name);
-console.log(arrayObject[1].year);
+document.getElementById("submitRegister").onclick = async function () {
+	user = new Account(
+		document.getElementById("username").value,
+		document.getElementById("accountNumber").value,
+		document.getElementById("password").value,
+		Number(document.getElementById("balance").value),
+		[
+			"Account Created!",
+			`Initial Balance: ${Number(document.getElementById("balance").value)}`,
+		],
+	);
+	const jsonString = JSON.stringify(user);
+
+	try {
+		const request = await fetch("http://127.0.0.1:8000/accounts/register", {
+			method: "POST",
+			body: jsonString,
+		});
+
+		if (!request.ok) {
+			document.getElementById("errorRegisterMsg").textContent =
+				"Register failed: Please check your input again!!";
+			return;
+		} else {
+			document.getElementById("errorRegisterMsg").textContent =
+				"Register successful!";
+			returnFunc();
+		}
+
+		const response = await request.json();
+		user = new Account(
+			response.name,
+			response.account_num,
+			response.password,
+			response.balance,
+			response.history,
+		);
+	} catch (error) {
+		document.getElementById("errorRegisterMsg").textContent =
+			"Register failed: Server is offline!";
+	}
+};
+
+document.getElementById("submitLogin").onclick = async function () {
+	const accountNumber = document.getElementById("loginAccountNumber").value;
+	const password = document.getElementById("loginPassword").value;
+	const jsonString = JSON.stringify({
+		account_num: accountNumber,
+		password: password,
+	});
+
+	try {
+		const request = await fetch("http://127.0.0.1:8000/accounts/login", {
+			method: "POST",
+			body: jsonString,
+		});
+
+		if (!request.ok) {
+			document.getElementById("errorLoginMsg").textContent =
+				"Login failed: invalid account number or password!!";
+			return;
+		}
+
+        const response = await request.json();
+        user = new Account(
+            response.name,
+            response.account_num,
+            response.password,
+            response.balance,
+            response.history,
+        );
+
+        document.getElementById("errorLoginMsg").textContent =
+            "Login successful!";
+        homepage();
+	} catch (error) {
+		document.getElementById("errorLoginMsg").textContent =
+			"Login failed: Server is offline!";
+	}
+};
