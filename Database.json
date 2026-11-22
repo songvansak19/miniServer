@@ -3,7 +3,7 @@
     "name": "sak",
     "account_num": 123,
     "password": "sak123",
-    "balance": 15800.0,
+    "balance": 27645.0,
     "history": [
       "Acccount Created!",
       "Initial Balance: 1000.0",
@@ -20,14 +20,17 @@
       "Receive: 300.0",
       "Receive: 100000.0",
       "Transfer: 100000.0",
-      "Receive: 5000.0"
+      "Receive: 5000.0",
+      "Transfer: 1000.0",
+      "Receive: 500.0",
+      "Receive: 12345.0"
     ]
   },
   {
     "name": "Vansith",
     "account_num": 456,
     "password": "pass456",
-    "balance": 101100.0,
+    "balance": 89255.0,
     "history": [
       "Acccount Created!",
       "Initial Balance: 200.0",
@@ -35,7 +38,10 @@
       "Receive: 100.0",
       "Receive: 1000.0",
       "Transfer: 300.0",
-      "Receive: 100000.0"
+      "Receive: 100000.0",
+      "Receive: 1000.0",
+      "Transfer: 500.0",
+      "Transfer: 12345.0"
     ]
   },
   {
