@@ -10,7 +10,7 @@ public class ClientRequest {
 
     private static String processBuilder(String json, String request) throws IOException {
         Process process = new ProcessBuilder(
-                "curl.exe",
+                "curl",
                 "-X", "POST",
                 "http://" + IP + ":8000/accounts/" + request,
                 "-d", json).start();
@@ -59,7 +59,7 @@ public class ClientRequest {
 
     public static Account update(long account_num) throws IOException {
         Process process = new ProcessBuilder(
-                "curl.exe",
+                "curl",
                 "-X", "GET",
                 "http://" + IP + ":8000/accounts/get/" + account_num).start();
 
