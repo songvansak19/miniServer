@@ -78,11 +78,14 @@ function setButtonLoading(button, isLoading, loadingText) {
 }
 
 function formatRequestError(action, err, fallbackMsg) {
+	if (err && err.serverMessage) {
+		return err.serverMessage;
+	}
 	if (err instanceof TypeError) {
 		if (window.location.origin !== "http://127.0.0.1:8000") {
 			const currentOrigin =
 				window.location.origin === "null" ? "file://" : window.location.origin;
-			return `${action} blocked by browser CORS (or server offline). Open this page from http://127.0.0.1:8000 instead of ${currentOrigin}.`;
+			return `${action} failed: Could not connect to http://127.0.0.1:8000 from ${currentOrigin}. Make sure the banking server is running.`;
 		}
 		return `${action} failed: Server is offline!`;
 	}
@@ -90,13 +93,42 @@ function formatRequestError(action, err, fallbackMsg) {
 }
 
 async function apiRequest(path, options = {}) {
-	const response = await fetch(`${API_BASE}${path}`, options);
-	if (!response.ok) {
-		throw new Error(`HTTP ${response.status}`);
+	const fetchOptions = { ...options };
+	if (fetchOptions.body) {
+		fetchOptions.headers = {
+			"Content-Type": "application/json",
+			...(fetchOptions.headers || {}),
+		};
 	}
+
+	const response = await fetch(`${API_BASE}${path}`, fetchOptions);
 	const text = await response.text();
-	if (!text) return null;
-	return JSON.parse(text);
+	let data = null;
+	if (text) {
+		try {
+			data = JSON.parse(text);
+		} catch {
+			data = null;
+		}
+	}
+
+	if (!response.ok) {
+		const error = new Error(
+			(data && data.error) || `HTTP ${response.status}`,
+		);
+		if (data && data.error) {
+			error.serverMessage = data.error;
+		}
+		throw error;
+	}
+
+	if (data && data.error) {
+		const error = new Error(data.error);
+		error.serverMessage = data.error;
+		throw error;
+	}
+
+	return data;
 }
 
 function toAccount(data) {

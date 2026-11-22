@@ -8,11 +8,17 @@ public class Account {
     private String password;
     private List<String> history = new ArrayList<>();
 
+    public Account() {
+    }
+
     public Account(String name, long account_num, String password, double balance) {
         this.name = name;
         this.account_num = account_num;
         this.password = password;
         this.balance = balance;
+        this.history = new ArrayList<>();
+        this.history.add("Account Created!");
+        this.history.add("Initial Balance: " + balance);
     }
 
     public String getName() {
@@ -32,6 +38,9 @@ public class Account {
     }
 
     public List<String> getHistory() {
+        if (history == null) {
+            history = new ArrayList<>();
+        }
         return history;
     }
 }
